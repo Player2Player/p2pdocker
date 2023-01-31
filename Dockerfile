@@ -1,5 +1,7 @@
 FROM node:18.13-bullseye-slim
 
+RUN npm install pm2 -g
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -15,5 +17,5 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "node", "app.js" ]
+CMD ["pm2-runtime", "app.js"]
 #ENTRYPOINT ["/opt/startup/init_container.sh"]
