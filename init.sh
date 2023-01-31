@@ -1,4 +1,6 @@
 #!/bin/bash
 set -e
 
-npm start
+echo "Starting web server..."
+
+pm2-runtime /usr/src/app/app.js
