@@ -7,12 +7,12 @@ console.log(dateTime);
 const http = require('http');
 
 const hostname = '127.0.0.1';
-const port = 8080;
+const port = process.env.PORT || 8000;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
+  res.end('Hello World! Hey how are you ');
 });
 
 server.listen(port, hostname, () => {
