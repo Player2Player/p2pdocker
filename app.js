@@ -7,7 +7,7 @@ console.log(dateTime);
 const http = require('http');
 
 const hostname = '127.0.0.1';
-const port = process.env.WEBSITES_PORT || 8000;
+const port = 8080;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
