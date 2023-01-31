@@ -19,7 +19,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8000
 
-#CMD ["pm2-runtime", "app.js"]
-ENTRYPOINT ["/opt/startup/init.sh"]
+CMD ["pm2-runtime", "app.js"]
+#ENTRYPOINT ["/opt/startup/init.sh"]
