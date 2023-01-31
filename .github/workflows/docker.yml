@@ -1,0 +1,36 @@
+name: Build and deploy a container image to Azure App service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authenticate using publish profile
+        uses: azure/webapps-deploy@v2
+        with:
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_PRODUCTION }}
+
+      - name: Authenticate with the Docker registry
+        uses: azure/container-actions/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push the image tagged with the git commit hash
+        run: |
+          docker build . -t p2pdocker.azurecr.io/p2pdocker:${{ github.sha }}
+          docker push p2pdocker.azurecr.io/p2pdocker:${{ github.sha }}
+
+      - name: Update image tag on the Azure Web App
+        uses: azure/webapps-container-deploy@v1
+        with:
+          app-name: 'p2pdocker'
+          slot-name: 'production'
+          images: 'p2pdocker.azurecr.io/p2pdocker:${{ github.sha }}'
