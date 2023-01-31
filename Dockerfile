@@ -4,6 +4,7 @@ RUN npm install pm2 -g
 RUN mkdir -p /home/LogFiles /opt/startup
 
 COPY init.sh /opt/startup
+RUN chmod -R +x /opt/startup/init.sh
 
 # Create app directory
 WORKDIR /usr/src/app
